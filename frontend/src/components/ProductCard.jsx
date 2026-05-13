@@ -1,6 +1,7 @@
 import React from 'react'
 import Button from './Button'
 import styles from './ProductCard.module.css'
+import { useNavigate } from 'react-router-dom'
 
 const PRODUCTS = [
   {id:1 ,category:'ELECTRONICS',title:'Wireless Earbuds Pro',price:'$59.99',stock:120,inStock:true,emoji:'📱'},
@@ -13,7 +14,9 @@ const PRODUCTS = [
   {id:8 ,category:'BEAUTY',title:'Vitamin C Serum',price:'$19.99',stock:88,inStock:true,emoji:'🧴'},
 ]
 
+
 const ProductCard = ({className, category,title,price,stock,emoji}) => {
+  const navigate = useNavigate()
   return (
     <div className={styles.cards}>
       {PRODUCTS.map((product)=>(
@@ -26,7 +29,9 @@ const ProductCard = ({className, category,title,price,stock,emoji}) => {
             <h4 className={styles.title}>{product.title}</h4>
             <h3 className={styles.price}>{product.price}</h3>
             <p className={styles.stock}>{product.stock} in stock</p>
-            <Button onclick={} className={styles.addCart}>Add to cart</Button>
+            <Button onClick={()=>{
+              navigate('/cart')
+            }} className={styles.addCart}>Add to cart</Button>
           </div>
         </div>
       ))}
