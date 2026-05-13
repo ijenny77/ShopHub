@@ -1,0 +1,17 @@
+.navlinks {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.link {
+  text-decoration: none;
+  color: var(--white);
+  display: flex;
+  align-items: center;
+}
+.mainSidebar {
+  background-color: var(--navbar);
+  height: 100vh;
+  width: 14%;
+  padding: 4rem 3rem;
+}

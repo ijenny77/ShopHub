@@ -1,0 +1,57 @@
+.cards{
+    display: grid;
+    grid-template-columns:repeat(4, 1fr);
+    margin: 0rem 15rem;
+    gap:1rem;
+}
+.card {
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  width: 100%;
+  margin-top: 2rem;
+}
+.emojiCard{
+    background-color: #EFF6FF;
+    height: 23vh;
+    border-top-left-radius:0.5rem ;
+    border-top-right-radius:0.5rem ;
+}
+.emoji{
+    font-size: 3rem;
+    text-align: center;
+    padding:3rem 0rem;
+}
+.top {
+  background-color: #eff6ff;
+}
+.addCart {
+  padding: 0.6rem 0.6rem;
+  border: none;
+  background-color:var(--bbutton) ;
+  color: var(--white);
+  font-weight: 600;
+  margin-top: 0.3rem;
+  border-radius: 0.3rem;
+  width: 80%;
+  margin: 0.8rem 0.9rem;
+}
+.cardText{
+    margin-left: 0.8rem;
+    margin-top: 0.8rem;
+    margin-bottom: 0.8rem;
+}
+.category{
+    color: var(--bbutton);
+    font-size: 0.7rem;
+}
+.title{
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin: 0.2rem 0rem;
+}
+.stock{
+    font-size: 0.8rem;
+    color: #78889A;
+    font-weight: 500;
+    margin-top: 0.4rem;
+}

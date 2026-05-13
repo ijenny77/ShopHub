@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShopHub — Design Preview</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --danger: #dc2626;
+      --success: #16a34a;
+      --bg: #f8fafc;
+      --border: #e2e8f0;
+      --text: #1e293b;
+      --muted: #64748b;
+      --navbar: #1E293B;
+    }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); }
+
+    /* ── NAVBAR ── */
+    nav {
+      background: var(--navbar);
+      padding: 0 2rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .logo { font-size: 1.4rem; font-weight: 800; color: #fff; cursor: pointer; }
+    .logo span { color: var(--primary); }
+    .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+    .nav-link { color: #94a3b8; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: color 0.15s; }
+    .nav-link:hover, .nav-link.active { color: #fff; }
+    .nav-btn { padding: 0.45rem 1.1rem; border-radius: 7px; border: none; background: var(--primary); color: #fff; font-weight: 600; font-size: 0.85rem; cursor: pointer; }
+    .nav-btn.outline { background: transparent; border: 1px solid #475569; color: #94a3b8; }
+    .nav-btn.outline:hover { border-color: #94a3b8; color: #fff; }
+    .cart-wrap { position: relative; cursor: pointer; font-size: 1.2rem; color: #fff; }
+    .badge { position: absolute; top: -8px; right: -10px; background: var(--danger); color: #fff; border-radius: 99px; font-size: 0.65rem; padding: 1px 5px; font-weight: 700; }
+
+    /* ── PAGES ── */
+    .screen { display: none; min-height: calc(100vh - 64px); }
+    .screen.active { display: block; }
+    .page    { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+    .page-sm { max-width: 760px;  margin: 0 auto; padding: 2rem; }
+    .page-xs { max-width: 440px;  margin: 0 auto; padding: 2rem; }
+
+    /* ── HERO ── */
+    .hero { text-align: center; padding: 2.5rem 0 2rem; }
+    .hero h1 { font-size: 2.4rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .hero p { color: var(--muted); font-size: 1rem; }
+
+    /* ── FILTERS ── */
+    .filters { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; margin: 1.5rem 0; }
+    .search-input { flex: 1; min-width: 200px; padding: 0.65rem 1rem; border: 1px solid var(--border); border-radius: 8px; font-size: 0.95rem; background: #fff; }
+    .filter-select { padding: 0.65rem 0.9rem; border: 1px solid var(--border); border-radius: 8px; font-size: 0.9rem; background: #fff; }
+
+    /* ── PRODUCT GRID ── */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1.25rem; }
+    .card { background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+    .card-img { height: 175px; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; }
+    .card-body { padding: 1rem; }
+    .card-cat { font-size: 0.72rem; color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.3rem; }
+    .card-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.4rem; }
+    .card-price { font-size: 1.2rem; font-weight: 800; }
+    .card-stock { font-size: 0.78rem; color: var(--muted); margin-top: 0.25rem; }
+    .add-btn { margin-top: 0.75rem; width: 100%; padding: 0.6rem; background: var(--primary); color: #fff; border: none; border-radius: 8px; font-weight: 600; font-size: 0.88rem; cursor: pointer; }
+    .add-btn:hover { background: var(--primary-dark); }
+    .add-btn.grey { background: #94a3b8; cursor: not-allowed; }
+
+    .pagination { display: flex; gap: 0.5rem; justify-content: center; margin-top: 2rem; }
+    .page-btn { padding: 0.45rem 0.9rem; border: 1px solid var(--border); border-radius: 6px; background: #fff; cursor: pointer; font-size: 0.9rem; }
+    .page-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+    /* ── DETAIL ── */
+    .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: start; }
+    .detail-img { background: #f1f5f9; border-radius: 16px; height: 360px; display: flex; align-items: center; justify-content: center; font-size: 7rem; }
+    .detail-cat { font-size: 0.8rem; color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+    .detail-title { font-size: 2rem; font-weight: 800; margin: 0.5rem 0; }
+    .detail-price { font-size: 2.2rem; font-weight: 800; margin: 0.25rem 0; }
+    .detail-desc { color: #475569; line-height: 1.7; font-size: 0.95rem; margin: 1rem 0; }
+    .detail-stock { font-size: 0.9rem; color: var(--muted); margin-bottom: 1rem; }
+    .qty-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+    .qty-btn { width: 36px; height: 36px; border: 1px solid var(--border); border-radius: 8px; background: #fff; font-size: 1.2rem; cursor: pointer; }
+    .qty-num { font-weight: 700; font-size: 1.1rem; min-width: 24px; text-align: center; }
+    .big-btn { padding: 0.9rem 2rem; background: var(--primary); color: #fff; border: none; border-radius: 10px; font-weight: 700; font-size: 1rem; cursor: pointer; }
+    .big-btn:hover { background: var(--primary-dark); }
+    .back-btn { background: none; border: none; color: var(--primary); cursor: pointer; margin-bottom: 1.5rem; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 0.4rem; }
+    .back-btn:hover { text-decoration: underline; }
+
+    /* ── CART ── */
+    .cart-item { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 1.1rem; margin-bottom: 0.75rem; display: flex; gap: 1rem; align-items: center; }
+    .cart-thumb { width: 72px; height: 72px; background: #f1f5f9; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 2rem; flex-shrink: 0; }
+    .cart-info { flex: 1; }
+    .cart-name { font-weight: 600; margin-bottom: 0.25rem; }
+    .cart-price-sm { color: var(--primary); font-weight: 700; }
+    .cart-controls { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem; }
+    .ctrl-btn { width: 28px; height: 28px; border: 1px solid var(--border); border-radius: 6px; background: #fff; cursor: pointer; font-size: 1rem; }
+    .remove-link { background: none; border: none; color: var(--danger); cursor: pointer; font-size: 0.82rem; margin-left: auto; }
+    .item-total { font-weight: 700; font-size: 1.1rem; }
+    .summary-box { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-top: 1rem; }
+    .sum-row { display: flex; justify-content: space-between; font-size: 0.92rem; margin-bottom: 0.5rem; color: var(--muted); }
+    .sum-total { display: flex; justify-content: space-between; font-weight: 700; font-size: 1.2rem; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--border); }
+    .checkout-btn { margin-top: 1rem; width: 100%; padding: 0.9rem; background: var(--primary); color: #fff; border: none; border-radius: 10px; font-weight: 700; font-size: 1rem; cursor: pointer; }
+    .checkout-btn:hover { background: var(--primary-dark); }
+
+    /* ── CHECKOUT ── */
+    .form-section { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; }
+    .section-label { font-weight: 700; font-size: 1rem; margin-bottom: 1rem; }
+    .field { margin-bottom: 1rem; }
+    .field label { display: block; font-size: 0.82rem; font-weight: 500; margin-bottom: 0.35rem; color: #475569; }
+    .field input, .field select { width: 100%; padding: 0.65rem 0.9rem; border: 1px solid var(--border); border-radius: 8px; font-size: 0.9rem; font-family: inherit; background: #fff; }
+    .field input:focus { border-color: var(--primary); outline: none; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .radio-item { display: flex; align-items: center; gap: 0.65rem; font-size: 0.9rem; cursor: pointer; margin-bottom: 0.6rem; }
+    .divider { border-top: 1px solid var(--border); margin: 0.75rem 0; }
+    .place-btn { width: 100%; padding: 0.9rem; background: var(--primary); color: #fff; border: none; border-radius: 10px; font-weight: 700; font-size: 1rem; cursor: pointer; margin-top: 0.25rem; }
+    .place-btn:hover { background: var(--primary-dark); }
+
+    /* ── ORDERS ── */
+    .order-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; }
+    .order-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.85rem; }
+    .order-id { font-weight: 600; font-size: 0.9rem; }
+    .order-date { color: var(--muted); font-size: 0.8rem; margin-top: 0.2rem; }
+    .status-badge { display: inline-block; border-radius: 99px; padding: 0.25rem 0.75rem; font-size: 0.78rem; font-weight: 700; }
+    .s-delivered  { background: #dcfce7; color: #166534; }
+    .s-shipped    { background: #e0f2fe; color: #0369a1; }
+    .s-processing { background: #dbeafe; color: #1e40af; }
+    .s-pending    { background: #fef9c3; color: #854d0e; }
+    .order-item-row { display: flex; justify-content: space-between; font-size: 0.88rem; color: var(--muted); padding: 0.3rem 0; border-bottom: 1px solid #f8fafc; }
+    .order-total { display: flex; justify-content: space-between; font-weight: 700; font-size: 1rem; margin-top: 0.75rem; }
+    .order-addr { font-size: 0.82rem; color: var(--muted); margin-top: 0.4rem; }
+
+    /* ── AUTH ── */
+    .auth-card { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 2rem; margin-top: 2rem; }
+    .auth-title { font-size: 1.6rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .auth-sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
+    .auth-btn { width: 100%; padding: 0.85rem; background: var(--primary); color: #fff; border: none; border-radius: 10px; font-weight: 700; font-size: 1rem; cursor: pointer; margin-top: 0.25rem; }
+    .auth-btn:hover { background: var(--primary-dark); }
+    .auth-alt { text-align: center; margin-top: 1.25rem; font-size: 0.88rem; color: var(--muted); }
+    .auth-link { color: var(--primary); font-weight: 600; cursor: pointer; }
+    .auth-link:hover { text-decoration: underline; }
+
+    .sec-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 1.25rem; }
+  </style>
+</head>
+<body>
+
+<!-- ════════════ HOME ════════════ -->
+<div class="screen active" id="screen-home">
+  <nav>
+    <div class="logo" onclick="go('home')">Shop<span>Hub</span></div>
+    <div class="nav-links">
+      <span class="nav-link active" onclick="go('home')">Home</span>
+      <span class="nav-link" onclick="go('cart')">Cart</span>
+      <span class="nav-link" onclick="go('orders')">Orders</span>
+      <div class="cart-wrap" onclick="go('cart')">🛒<span class="badge">3</span></div>
+      <button class="nav-btn outline" onclick="go('login')">Login</button>
+      <button class="nav-btn" onclick="go('register')">Register</button>
+    </div>
+  </nav>
+  <div class="page">
+    <div class="hero">
+      <h1>Discover Amazing Products</h1>
+      <p>Find everything you need, delivered to your door.</p>
+    </div>
+    <div class="filters">
+      <input class="search-input" placeholder="Search products…" />
+      <select class="filter-select"><option>All Categories</option><option>Electronics</option><option>Clothing</option><option>Books</option><option>Accessories</option><option>Beauty</option></select>
+      <select class="filter-select"><option>Newest</option><option>Price: Low → High</option><option>Price: High → Low</option><option>Most Popular</option></select>
+    </div>
+    <div class="grid">
+      <div class="card" onclick="go('detail')"><div class="card-img" style="background:#eff6ff">📱</div><div class="card-body"><div class="card-cat">Electronics</div><div class="card-name">Wireless Earbuds Pro</div><div class="card-price">$59.99</div><div class="card-stock">120 in stock</div><button class="add-btn" onclick="event.stopPropagation();go('cart')">Add to Cart</button></div></div>
+      <div class="card" onclick="go('detail')"><div class="card-img" style="background:#fefce8">👟</div><div class="card-body"><div class="card-cat">Clothing</div><div class="card-name">Nike Running Shoes</div><div class="card-price">$89.00</div><div class="card-stock">45 in stock</div><button class="add-btn" onclick="event.stopPropagation();go('cart')">Add to Cart</button></div></div>
+      <div class="card" onclick="go('detail')"><div class="card-img" style="background:#f0fdf4">📚</div><div class="card-body"><div class="card-cat">Books</div><div class="card-name">Clean Code — R. Martin</div><div class="card-price">$24.99</div><div class="card-stock">200 in stock</div><button class="add-btn" onclick="event.stopPropagation();go('cart')">Add to Cart</button></div></div>
+      <div class="card" onclick="go('detail')"><div class="card-img" style="background:#fdf4ff">⌚</div><div class="card-body"><div class="card-cat">Electronics</div><div class="card-name">Smart Watch Series 5</div><div class="card-price">$199.00</div><div class="card-stock">18 in stock</div><button class="add-btn" onclick="event.stopPropagation();go('cart')">Add to Cart</button></div></div>
+      <div class="card" onclick="go('detail')"><div class="card-img" style="background:#fff7ed">🎒</div><div class="card-body"><div class="card-cat">Accessories</div><div class="card-name">Travel Backpack 40L</div><div class="card-price">$49.99</div><div class="card-stock">67 in stock</div><button class="add-btn" onclick="event.stopPropagation();go('cart')">Add to Cart</button></div></div>
+      <div class="card" onclick="go('detail')"><div class="card-img" style="background:#f0f9ff">💻</div><div class="card-body"><div class="card-cat">Electronics</div><div class="card-name">USB-C Hub 7-in-1</div><div class="card-price">$34.99</div><div class="card-stock">0 in stock</div><button class="add-btn grey" disabled onclick="event.stopPropagation()">Out of Stock</button></div></div>
+      <div class="card" onclick="go('detail')"><div class="card-img" style="background:#fef2f2">🎧</div><div class="card-body"><div class="card-cat">Electronics</div><div class="card-name">Noise Cancelling Headphones</div><div class="card-price">$149.00</div><div class="card-stock">30 in stock</div><button class="add-btn" onclick="event.stopPropagation();go('cart')">Add to Cart</button></div></div>
+      <div class="card" onclick="go('detail')"><div class="card-img" style="background:#f0fdf4">🧴</div><div class="card-body"><div class="card-cat">Beauty</div><div class="card-name">Vitamin C Serum</div><div class="card-price">$19.99</div><div class="card-stock">88 in stock</div><button class="add-btn" onclick="event.stopPropagation();go('cart')">Add to Cart</button></div></div>
+    </div>
+    <div class="pagination">
+      <button class="page-btn active">1</button>
+      <button class="page-btn">2</button>
+      <button class="page-btn">3</button>
+      <button class="page-btn">4</button>
+      <button class="page-btn">5</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ PRODUCT DETAIL ════════════ -->
+<div class="screen" id="screen-detail">
+  <nav>
+    <div class="logo" onclick="go('home')">Shop<span>Hub</span></div>
+    <div class="nav-links">
+      <span class="nav-link" onclick="go('home')">Home</span>
+      <span class="nav-link" onclick="go('cart')">Cart</span>
+      <span class="nav-link" onclick="go('orders')">Orders</span>
+      <div class="cart-wrap" onclick="go('cart')">🛒<span class="badge">3</span></div>
+      <button class="nav-btn outline" onclick="go('login')">Login</button>
+      <button class="nav-btn" onclick="go('register')">Register</button>
+    </div>
+  </nav>
+  <div class="page">
+    <button class="back-btn" onclick="go('home')">← Back to Browse</button>
+    <div class="detail-grid">
+      <div class="detail-img" style="background:#eff6ff">📱</div>
+      <div>
+        <div class="detail-cat">Electronics</div>
+        <h1 class="detail-title">Wireless Earbuds Pro</h1>
+        <div class="detail-price">$59.99</div>
+        <p class="detail-desc">Premium wireless earbuds with active noise cancellation, 30-hour battery life, and crystal-clear sound. Compatible with all Bluetooth 5.0 devices. Water resistant (IPX5). Includes charging case.</p>
+        <div class="detail-stock">✅ 120 units available</div>
+        <div class="qty-row">
+          <button class="qty-btn">−</button>
+          <span class="qty-num">1</span>
+          <button class="qty-btn">+</button>
+        </div>
+        <button class="big-btn" onclick="go('cart')">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ CART ════════════ -->
+<div class="screen" id="screen-cart">
+  <nav>
+    <div class="logo" onclick="go('home')">Shop<span>Hub</span></div>
+    <div class="nav-links">
+      <span class="nav-link" onclick="go('home')">Home</span>
+      <span class="nav-link active" onclick="go('cart')">Cart</span>
+      <span class="nav-link" onclick="go('orders')">Orders</span>
+      <div class="cart-wrap" onclick="go('cart')">🛒<span class="badge">3</span></div>
+      <button class="nav-btn outline" onclick="go('login')">Login</button>
+      <button class="nav-btn" onclick="go('register')">Register</button>
+    </div>
+  </nav>
+  <div class="page-sm">
+    <div class="sec-title">Your Cart</div>
+    <div class="cart-item">
+      <div class="cart-thumb" style="background:#eff6ff">📱</div>
+      <div class="cart-info">
+        <div class="cart-name">Wireless Earbuds Pro</div>
+        <div class="cart-price-sm">$59.99</div>
+        <div class="cart-controls">
+          <button class="ctrl-btn">−</button>
+          <span style="font-weight:700;min-width:20px;text-align:center">1</span>
+          <button class="ctrl-btn">+</button>
+          <button class="remove-link">Remove</button>
+        </div>
+      </div>
+      <div class="item-total">$59.99</div>
+    </div>
+    <div class="cart-item">
+      <div class="cart-thumb" style="background:#fefce8">👟</div>
+      <div class="cart-info">
+        <div class="cart-name">Nike Running Shoes</div>
+        <div class="cart-price-sm">$89.00</div>
+        <div class="cart-controls">
+          <button class="ctrl-btn">−</button>
+          <span style="font-weight:700;min-width:20px;text-align:center">1</span>
+          <button class="ctrl-btn">+</button>
+          <button class="remove-link">Remove</button>
+        </div>
+      </div>
+      <div class="item-total">$89.00</div>
+    </div>
+    <div class="cart-item">
+      <div class="cart-thumb" style="background:#fdf4ff">⌚</div>
+      <div class="cart-info">
+        <div class="cart-name">Smart Watch Series 5</div>
+        <div class="cart-price-sm">$199.00</div>
+        <div class="cart-controls">
+          <button class="ctrl-btn">−</button>
+          <span style="font-weight:700;min-width:20px;text-align:center">1</span>
+          <button class="ctrl-btn">+</button>
+          <button class="remove-link">Remove</button>
+        </div>
+      </div>
+      <div class="item-total">$199.00</div>
+    </div>
+    <div class="summary-box">
+      <div class="sum-row"><span>Subtotal (3 items)</span><span>$347.98</span></div>
+      <div class="sum-row"><span>Shipping</span><span style="color:var(--success)">Free</span></div>
+      <div class="sum-total"><span>Total</span><span>$347.98</span></div>
+      <button class="checkout-btn" onclick="go('checkout')">Proceed to Checkout →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ CHECKOUT ════════════ -->
+<div class="screen" id="screen-checkout">
+  <nav>
+    <div class="logo" onclick="go('home')">Shop<span>Hub</span></div>
+    <div class="nav-links">
+      <span class="nav-link" onclick="go('home')">Home</span>
+      <span class="nav-link" onclick="go('cart')">Cart</span>
+      <span class="nav-link" onclick="go('orders')">Orders</span>
+      <div class="cart-wrap" onclick="go('cart')">🛒<span class="badge">3</span></div>
+      <button class="nav-btn outline" onclick="go('login')">Login</button>
+      <button class="nav-btn" onclick="go('register')">Register</button>
+    </div>
+  </nav>
+  <div class="page-sm">
+    <button class="back-btn" onclick="go('cart')">← Back to Cart</button>
+    <div class="sec-title">Checkout</div>
+    <div class="form-section">
+      <div class="section-label">Shipping Address</div>
+      <div class="field"><label>Street Address</label><input placeholder="KG 123 St" /></div>
+      <div class="grid-2">
+        <div class="field"><label>City</label><input placeholder="Kigali" /></div>
+        <div class="field"><label>State / Province</label><input placeholder="KG" /></div>
+      </div>
+      <div class="grid-2">
+        <div class="field"><label>ZIP / Postal Code</label><input placeholder="00000" /></div>
+        <div class="field"><label>Country</label><input placeholder="Rwanda" /></div>
+      </div>
+    </div>
+    <div class="form-section">
+      <div class="section-label">Payment Method</div>
+      <label class="radio-item"><input type="radio" name="pay" checked /> Credit / Debit Card</label>
+      <label class="radio-item"><input type="radio" name="pay" /> Mobile Money (MoMo)</label>
+      <label class="radio-item"><input type="radio" name="pay" /> Cash on Delivery</label>
+    </div>
+    <div class="form-section">
+      <div class="section-label">Order Summary</div>
+      <div class="sum-row"><span>Wireless Earbuds Pro × 1</span><span>$59.99</span></div>
+      <div class="sum-row"><span>Nike Running Shoes × 1</span><span>$89.00</span></div>
+      <div class="sum-row"><span>Smart Watch Series 5 × 1</span><span>$199.00</span></div>
+      <div class="divider"></div>
+      <div class="sum-total"><span>Total</span><span>$347.98</span></div>
+    </div>
+    <button class="place-btn" onclick="go('success')">Place Order — $347.98</button>
+  </div>
+</div>
+
+<!-- ════════════ ORDERS ════════════ -->
+<div class="screen" id="screen-orders">
+  <nav>
+    <div class="logo" onclick="go('home')">Shop<span>Hub</span></div>
+    <div class="nav-links">
+      <span class="nav-link" onclick="go('home')">Home</span>
+      <span class="nav-link" onclick="go('cart')">Cart</span>
+      <span class="nav-link active" onclick="go('orders')">Orders</span>
+      <div class="cart-wrap" onclick="go('cart')">🛒</div>
+      <button class="nav-btn outline" onclick="go('login')">Login</button>
+      <button class="nav-btn" onclick="go('register')">Register</button>
+    </div>
+  </nav>
+  <div class="page-sm">
+    <div class="sec-title">My Orders</div>
+    <div class="order-card">
+      <div class="order-header"><div><div class="order-id">Order #A3F9C1E2</div><div class="order-date">May 12, 2026</div></div><span class="status-badge s-delivered">Delivered</span></div>
+      <div class="order-item-row"><span>Wireless Earbuds Pro × 1</span><span>$59.99</span></div>
+      <div class="order-item-row"><span>Travel Backpack 40L × 2</span><span>$99.98</span></div>
+      <div class="order-total"><span>Total</span><span>$159.97</span></div>
+      <div class="order-addr">Shipped to: Kigali, Rwanda &nbsp;·&nbsp; Mobile Money</div>
+    </div>
+    <div class="order-card">
+      <div class="order-header"><div><div class="order-id">Order #B7D2F4A8</div><div class="order-date">May 10, 2026</div></div><span class="status-badge s-shipped">Shipped</span></div>
+      <div class="order-item-row"><span>Smart Watch Series 5 × 1</span><span>$199.00</span></div>
+      <div class="order-total"><span>Total</span><span>$199.00</span></div>
+      <div class="order-addr">Shipped to: Kigali, Rwanda &nbsp;·&nbsp; Credit Card</div>
+    </div>
+    <div class="order-card">
+      <div class="order-header"><div><div class="order-id">Order #C1E8B3D5</div><div class="order-date">May 8, 2026</div></div><span class="status-badge s-processing">Processing</span></div>
+      <div class="order-item-row"><span>Nike Running Shoes × 1</span><span>$89.00</span></div>
+      <div class="order-item-row"><span>Vitamin C Serum × 3</span><span>$59.97</span></div>
+      <div class="order-total"><span>Total</span><span>$148.97</span></div>
+      <div class="order-addr">Shipped to: Kigali, Rwanda &nbsp;·&nbsp; Cash on Delivery</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ LOGIN ════════════ -->
+<div class="screen" id="screen-login">
+  <nav>
+    <div class="logo" onclick="go('home')">Shop<span>Hub</span></div>
+    <div class="nav-links">
+      <span class="nav-link" onclick="go('home')">Home</span>
+      <span class="nav-link" onclick="go('cart')">Cart</span>
+      <span class="nav-link" onclick="go('orders')">Orders</span>
+      <div class="cart-wrap" onclick="go('cart')">🛒</div>
+      <button class="nav-btn outline" onclick="go('login')">Login</button>
+      <button class="nav-btn" onclick="go('register')">Register</button>
+    </div>
+  </nav>
+  <div class="page-xs">
+    <div class="auth-card">
+      <div class="auth-title">Welcome back</div>
+      <div class="auth-sub">Login to your ShopHub account</div>
+      <div class="field"><label>Email</label><input type="email" placeholder="you@email.com" /></div>
+      <div class="field"><label>Password</label><input type="password" placeholder="••••••••" /></div>
+      <button class="auth-btn" onclick="go('home')">Login</button>
+      <div class="auth-alt">No account? <span class="auth-link" onclick="go('register')">Register here</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ REGISTER ════════════ -->
+<div class="screen" id="screen-register">
+  <nav>
+    <div class="logo" onclick="go('home')">Shop<span>Hub</span></div>
+    <div class="nav-links">
+      <span class="nav-link" onclick="go('home')">Home</span>
+      <span class="nav-link" onclick="go('cart')">Cart</span>
+      <span class="nav-link" onclick="go('orders')">Orders</span>
+      <div class="cart-wrap" onclick="go('cart')">🛒</div>
+      <button class="nav-btn outline" onclick="go('login')">Login</button>
+      <button class="nav-btn" onclick="go('register')">Register</button>
+    </div>
+  </nav>
+  <div class="page-xs">
+    <div class="auth-card">
+      <div class="auth-title">Create an account</div>
+      <div class="auth-sub">Join ShopHub today</div>
+      <div class="field"><label>Full Name</label><input type="text" placeholder="Your name" /></div>
+      <div class="field"><label>Email</label><input type="email" placeholder="you@email.com" /></div>
+      <div class="field"><label>Password</label><input type="password" placeholder="At least 6 characters" /></div>
+      <button class="auth-btn" onclick="go('home')">Create Account</button>
+      <div class="auth-alt">Already have an account? <span class="auth-link" onclick="go('login')">Login</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ ORDER SUCCESS ════════════ -->
+<div class="screen" id="screen-success">
+  <nav>
+    <div class="logo" onclick="go('home')">Shop<span>Hub</span></div>
+    <div class="nav-links">
+      <span class="nav-link" onclick="go('home')">Home</span>
+      <span class="nav-link" onclick="go('cart')">Cart</span>
+      <span class="nav-link" onclick="go('orders')">Orders</span>
+      <div class="cart-wrap" onclick="go('cart')">🛒</div>
+      <button class="nav-btn outline" onclick="go('login')">Login</button>
+      <button class="nav-btn" onclick="go('register')">Register</button>
+    </div>
+  </nav>
+  <div style="max-width:500px;margin:4rem auto;padding:0 2rem;text-align:center">
+    <div style="font-size:5rem;margin-bottom:1rem">🎉</div>
+    <div style="font-size:2rem;font-weight:800;color:var(--success);margin-bottom:0.5rem">Order Placed!</div>
+    <div style="color:var(--muted);margin-bottom:2rem;line-height:1.6">Thank you! Your order is being processed and will be shipped to you soon.</div>
+    <button class="big-btn" onclick="go('orders')" style="margin-right:0.75rem">View My Orders</button>
+    <button class="big-btn" onclick="go('home')" style="background:#f1f5f9;color:var(--text)">Continue Shopping</button>
+  </div>
+</div>
+
+<script>
+  function go(page) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'))
+    document.getElementById('screen-' + page).classList.add('active')
+    window.scrollTo(0, 0)
+  }
+</script>
+</body>
+</html>

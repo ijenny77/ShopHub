@@ -1,0 +1,23 @@
+.mainHome{
+    background-color: #F8FAFC;
+}
+.productSearch {
+    border: 1px solid #e2e8f0;
+}
+.discover{
+    text-align: center;
+    padding-top: 5rem;
+    font-weight: 900;
+    font-size: 2.3rem;
+}
+.discoverText{
+    text-align: center;
+    color: #738297;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+.inputs{
+    display: flex;
+    gap: 0.5rem;
+    margin:0rem 15rem;
+}

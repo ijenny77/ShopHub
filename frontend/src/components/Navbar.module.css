@@ -1,0 +1,43 @@
+.mainNavbar {
+  background-color: var(--navbar);
+  display: flex;
+  gap: 0.6rem;
+  padding: 1rem;
+}
+.navlinks {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.4rem;
+}
+.link {
+  color: var(--white);
+  text-decoration: none;
+}
+.cart {
+  margin: 0.4rem 0.7rem;
+}
+.shop {
+  color: var(--white);
+  font-weight: 900;
+  font-size: 1.4rem;
+  margin-left: 2rem;
+  margin-right: 60rem;
+}
+.hub {
+  background: linear-gradient(to right, rgb(7, 7, 218), rgb(97, 5, 133));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.login {
+  border: 1px solid #5d6d84;
+  border-radius: 0.3rem;
+  background-color: var(--navbar);
+  color: #5d6d84;
+  font-weight: 700;
+}
+.register {
+  background-color: var(--bbutton);
+  color: var(--white);
+  font-weight: 600;
+  border: none;
+}

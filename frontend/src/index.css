@@ -1,0 +1,16 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --navbar: #1e293b;
+  --bbutton: #2563eb;
+  --white: #ffffff;
+  --gbutton: #94a3b8;
+}
+
+body {
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
