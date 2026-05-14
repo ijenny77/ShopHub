@@ -5,10 +5,15 @@
     gap:1rem;
 }
 .card {
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--border);
   border-radius: 0.5rem;
   width: 100%;
   margin-top: 2rem;
+}
+.card:hover{
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transform: translateY(-3px);
+    transition: 0.3s;
 }
 .emojiCard{
     background-color: #EFF6FF;

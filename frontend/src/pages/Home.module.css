@@ -2,7 +2,7 @@
     background-color: #F8FAFC;
 }
 .productSearch {
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--border);
 }
 .discover{
     text-align: center;
