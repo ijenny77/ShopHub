@@ -60,17 +60,23 @@
 .totalItems{
     display: flex; 
     justify-content: space-between;
+    color: #64748B;
+    font-weight: 600;
 }
 .shipping{
+    color: #64748B;
+    font-weight: 600;
     display: flex;
     justify-content: space-between;
     margin-bottom: 0.8rem;
 }
 .totalPrice{
+    margin-top: 0.4rem;
     display: flex;
     justify-content: space-between;
     font-weight: 700;
     font-size: 1.4rem;
+    margin-bottom: 1.5rem;
 }
 .proceed{
     border: none;
@@ -79,5 +85,5 @@
     font-weight: 700;
     font-size: 1rem;
     padding: 1rem 14rem;
-    margin: 0.5rem 2.4rem;
+    margin: 0rem 2.4rem;
 }

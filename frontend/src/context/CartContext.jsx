@@ -40,8 +40,8 @@ function CartContext(){
       ))}
       <div className={styles.total}>
         <span className={styles.totalItems}>Subtotal (3 items) <p>$347.98</p> </span>
-        <span className={styles.shipping}>Shipping <p>Free</p></span>
-        <hr />
+        <span className={styles.shipping}>Shipping <p style={{color:"#16A34A"}}>Free</p></span>
+        <hr style={{color:'#a8a8a8'}} />
         <span className={styles.totalPrice}>Total <p>$347.98</p></span>
         <Button className={styles.proceed}>Proceed to Checkout →</Button>
       </div>
