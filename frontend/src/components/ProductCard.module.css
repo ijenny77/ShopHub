@@ -60,3 +60,11 @@
     font-weight: 500;
     margin-top: 0.4rem;
 }
+.empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 0;
+    color: #78889A;
+    font-size: 1rem;
+    width: 100%;
+}

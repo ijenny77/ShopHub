@@ -9,13 +9,12 @@ app.use(cors())
 app.use(express.json())
 
 // ── Routes ────────────────────────────────────────────────────────────────
-// TODO: wire up your route files here, e.g.
-// app.use('/api/auth',       require('./routes/auth'))
-// app.use('/api/products',   require('./routes/products'))
-// app.use('/api/categories', require('./routes/categories'))
-// app.use('/api/cart',       require('./routes/cart'))
-// app.use('/api/orders',     require('./routes/orders'))
-// app.use('/api/admin',      require('./routes/admin'))
+app.use('/api/auth',       require('./routes/auth'))
+app.use('/api/products',   require('./routes/products'))
+app.use('/api/categories', require('./routes/categories'))
+app.use('/api/cart',       require('./routes/cart'))
+app.use('/api/orders',     require('./routes/orders'))
+app.use('/api/admin',      require('./routes/admin'))
 
 app.get('/', (req, res) => res.json({ message: 'ShopHub API running ✅' }))
 
