@@ -1,0 +1,82 @@
+.page {
+  background: #F8FAFC;
+  min-height: 100vh;
+  padding: 3rem 2rem;
+}
+
+.card {
+  display: flex;
+  gap: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  border-radius: 0.8rem;
+  padding: 2rem;
+}
+
+.emojiBox {
+  background: #EFF6FF;
+  border-radius: 0.8rem;
+  width: 200px;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emoji {
+  font-size: 5rem;
+}
+
+.info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.category {
+  color: #6366F1;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.name {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.description {
+  color: #64748B;
+  font-size: 0.95rem;
+}
+
+.price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1E293B;
+}
+
+.stock {
+  font-size: 0.85rem;
+  color: #78889A;
+}
+
+.btn {
+  margin-top: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  background: #6366F1;
+  color: #fff;
+  border: none;
+  border-radius: 0.4rem;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.btn:hover {
+  background: #4F46E5;
+}

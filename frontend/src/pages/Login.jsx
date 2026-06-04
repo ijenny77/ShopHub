@@ -8,11 +8,16 @@ const Login = () => {
   const navigate = useNavigate()
   const [email,setEmail] = useState('')
   const [password,setPassword] = useState('')
+  const [error,setError] = useState('')
   const {login} = useAuth()
   const handleSubmit = async (e) =>{
     e.preventDefault()
-    await login(email,password)
-    navigate('/')
+    try{
+      await login(email,password)
+      navigate('/')
+    }catch(error){
+      setError(error.message || 'Invalid email or password')
+    }
   }
   return (
     <div>
@@ -45,6 +50,7 @@ const Login = () => {
                 onChange={(e)=>setPassword(e.target.value)}
               />
             </div>
+            {error && <p style={{ color: 'red', fontSize: '0.85rem', marginBottom: '0.5rem' }}>{error}</p>}
             <Button type="submit" className={styles.btn}>Login</Button>
             <p className={styles.register}>
               No account?{" "}

@@ -2,9 +2,12 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import Button from "./Button";
+import {useCart} from '../context/CartContext'
 import { useAuth } from "../context/AuthContext";
 const Navbar = () => {
+  const {items} = useCart()
   const { user,logout } = useAuth()
+  const total = items.reduce((sum,i)=>sum + i.qty,0)
   const navigate = useNavigate()
   const handleLogout = () =>{
     logout()
@@ -20,7 +23,7 @@ const Navbar = () => {
         <Link className={styles.link} to="/cart">Cart</Link>
         <Link className={styles.link} to="/orders">Orders</Link>
       </div>
-      <p className={styles.cart}>🛒</p>
+      <p className={styles.cart}>🛒{total > 0 && total}</p>
       {user ? (
         <>
           <span className={styles.username}>Hello, {user.name}</span>

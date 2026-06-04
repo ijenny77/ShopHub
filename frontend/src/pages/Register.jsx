@@ -10,10 +10,16 @@ const Register = () => {
   const [email,setEmail] = useState('')
   const [password,setPassword] = useState('')
   const [name,setName] = useState('')
+  const [error,setError] = useState('')
   const handleSubmit = async (e) =>{
     e.preventDefault()
-    await register(name,email,password)
-    navigate('/login')
+    try{
+      await register(name,email,password)
+      navigate('/login')
+    }catch(error){
+      setError(error.message || 'Failed to create account')
+    }
+    
   }
   return (
     <div>
@@ -58,7 +64,7 @@ const Register = () => {
               onChange={(e)=>setPassword(e.target.value)}
               />
             </div>
-
+            {error && <p style={{ color: 'red', fontSize: '0.85rem', marginBottom: '0.5rem' }}>{error}</p>}
             <Button type="submit" className={styles.btn}>Create Account</Button>
 
             <p className={styles.login}>

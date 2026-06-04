@@ -2,10 +2,11 @@ import React from 'react'
 import Button from './Button'
 import styles from './ProductCard.module.css'
 import { useNavigate } from 'react-router-dom'
+import { useCart } from '../context/CartContext'
 
 const ProductCard = ({ products = [] }) => {
   const navigate = useNavigate()
-
+  const {addItem}  = useCart()
   if (products.length === 0) {
     return (
       <div className={styles.empty}>
@@ -17,7 +18,7 @@ const ProductCard = ({ products = [] }) => {
   return (
     <div className={styles.cards}>
       {products.map((product) => (
-        <div className={styles.card} key={product.id}>
+        <div className={styles.card} key={product.id} onClick={()=> navigate(`/product/${product.id}`)} style={{cursor:'pointer'}}>
           <div className={styles.emojiCard}>
             <p className={styles.emoji}>{product.emoji}</p>
           </div>
@@ -26,7 +27,11 @@ const ProductCard = ({ products = [] }) => {
             <h4 className={styles.title}>{product.title}</h4>
             <h3 className={styles.price}>${product.price.toFixed(2)}</h3>
             <p className={styles.stock}>{product.stock} in stock</p>
-            <Button onClick={() => navigate('/cart')} className={styles.addCart}>
+            <Button onClick={ async(e) => {
+              e.stopPropagation()
+              await addItem(product.id,1)
+              navigate('/cart')
+              }} className={styles.addCart}>
               Add to cart
             </Button>
           </div>
