@@ -4,6 +4,7 @@ import styles from "./Register.module.css";
 import Button from "../components/Button";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 const Register = () => {
   const { register } = useAuth()
   const navigate = useNavigate()
@@ -11,9 +12,14 @@ const Register = () => {
   const [password,setPassword] = useState('')
   const [name,setName] = useState('')
   const [error,setError] = useState('')
+  const [confirmPassword,setConfirmPassword] = useState('')
   const handleSubmit = async (e) =>{
     e.preventDefault()
     try{
+      if(password !== confirmPassword) {
+        setError('Password do not match')
+        return
+      }
       await register(name,email,password)
       navigate('/login')
     }catch(error){
@@ -63,6 +69,14 @@ const Register = () => {
               value={password}
               onChange={(e)=>setPassword(e.target.value)}
               />
+              <label className={styles.label}>Confirm Password</label>
+              <input 
+              type="password"
+              placeholder="Confirm password"
+              value={confirmPassword}
+              className={styles.input}
+              onChange={(e)=>setConfirmPassword(e.target.value)}
+               />
             </div>
             {error && <p style={{ color: 'red', fontSize: '0.85rem', marginBottom: '0.5rem' }}>{error}</p>}
             <Button type="submit" className={styles.btn}>Create Account</Button>

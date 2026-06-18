@@ -4,6 +4,7 @@ import styles from "./Navbar.module.css";
 import Button from "./Button";
 import {useCart} from '../context/CartContext'
 import { useAuth } from "../context/AuthContext";
+import { NavLink } from "react-router-dom";
 const Navbar = () => {
   const {items} = useCart()
   const { user,logout } = useAuth()
@@ -19,14 +20,14 @@ const Navbar = () => {
         Shop<span className={styles.hub}>Hub</span>
       </h1>
       <div className={styles.navlinks}>
-        <Link className={styles.link} to="/">Home</Link>
-        <Link className={styles.link} to="/cart">Cart</Link>
-        <Link className={styles.link} to="/orders">Orders</Link>
+        <NavLink className={({isActive}) => isActive ? styles.activeLink : styles.link} to="/">Home</NavLink>
+        <NavLink className={({isActive}) => isActive ? styles.activeLink : styles.link} to="/cart">Cart</NavLink>
+        <NavLink className={({isActive}) => isActive ? styles.activeLink : styles.link} to="/orders">Orders</NavLink>
       </div>
-      <p className={styles.cart}>🛒{total > 0 && total}</p>
+      <p className={styles.cart}>🛒{total > 0 && <span className={styles.badge}>{total}</span>}</p>
       {user ? (
         <>
-          <span className={styles.username}>Hello, {user.name}</span>
+          <Link className={styles.username} to='/profile'>Hello,{user.name}</Link>
           <Button className={styles.login} onClick={handleLogout}>Logout</Button>
         </>
       ):(

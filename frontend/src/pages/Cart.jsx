@@ -3,13 +3,14 @@ import Navbar from "../components/Navbar";
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import styles from "../context/CartContext.module.css";
+import toast from "react-hot-toast";
 
 const Cart = () => {
-  const { items, removeItem, clearCart,updateItem } = useCart()
+  const { items, removeItem, clearCart,updateItem,loading } = useCart()
   const navigate = useNavigate()
 
   const total = items.reduce((sum, i) => sum + i.product.price * i.qty, 0)
-
+  if(loading) return <p style={{textAlign:'center',marginTop:'4rem'}}>Loading...</p>
   return (
     <div>
       <Navbar />
@@ -26,6 +27,7 @@ const Cart = () => {
           <div className={styles.cartCards}>
             {items.map((item) => (
               <div className={styles.cartCard} key={item.product._id}>
+                <img src={item.product.image} alt={item.product.name} className={styles.cartImage} />
                 <div className={styles.cartCardText}>
                   <p>{item.product.name}</p>
                   <p>${item.product.price.toFixed(2)}</p>
@@ -35,7 +37,10 @@ const Cart = () => {
                   <span>{item.qty}</span>
                   <button className={styles.increase} onClick={() => updateItem(item.product._id,item.qty + 1)}>+</button>
                 </div>
-                <button className={styles.remove} onClick={() => removeItem(item.product._id)}>
+                <button className={styles.remove} onClick={() => {
+                  removeItem(item.product._id)
+                  toast.success('Item removed')
+                  }}>
                   Remove
                 </button>
               </div>

@@ -50,6 +50,15 @@
     padding:1.5rem;
     font-size: 2.5rem;
 }
+.cartImage {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    border-radius: 0.5rem;
+    background-color: #F0F4FF;
+    padding: 0.5rem;
+    flex-shrink: 0;
+}
 .total{
     padding: 1.4rem;
     background-color: var(--white);

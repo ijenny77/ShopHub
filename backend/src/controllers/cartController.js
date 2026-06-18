@@ -12,13 +12,17 @@ exports.getCart = async (req, res) => {
 exports.addItem = async (req, res) => {
   try {
     const { productId, quantity = 1 } = req.body
+    const Product = require('../models/Product')
+    const product = await Product.findById(productId)
+    if (!product) return res.status(404).json({ error: 'Product not found' })
+    if (quantity > product.stock) return res.status(400).json({ error: 'Not enough stock' })
     let cart = await Cart.findOne({ user: req.user.id })
     if (!cart) cart = await Cart.create({ user: req.user.id, items: [] })
     const existing = cart.items.find(i => i.product.toString() === productId)
     if (existing) {
-      existing.qty += quantity
+      existing.quantity += quantity
     } else {
-      cart.items.push({ product: productId, qty: quantity })
+      cart.items.push({ product: productId, quantity: quantity })
     }
     await cart.save()
     res.json(cart)
@@ -32,7 +36,7 @@ exports.updateItem = async (req, res) => {
     const cart = await Cart.findOne({ user: req.user.id })
     const item = cart?.items.find(i => i.product.toString() === req.params.productId)
     if (!item) return res.status(404).json({ message: 'Item not found' })
-    item.qty = req.body.quantity
+    item.quantity = req.body.quantity
     await cart.save()
     res.json(cart)
   } catch (err) {

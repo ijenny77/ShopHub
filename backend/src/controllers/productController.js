@@ -2,11 +2,28 @@ const Product = require('../models/Product')
 
 exports.getAll = async (req, res) => {
   try {
-    const { category, search } = req.query
+    const { category, search, page = 1, limit = 10, sort, minPrice, maxPrice } = req.query
     const filter = {}
     if (category) filter.category = category
     if (search) filter.name = { $regex: search, $options: 'i' }
-    res.json(await Product.find(filter))
+    if (minPrice || maxPrice) {
+      filter.price = {}
+      if (minPrice) filter.price.$gte = Number(minPrice)
+      if (maxPrice) filter.price.$lte = Number(maxPrice)
+    }
+    let sortObj = {}
+    if (sort === 'price_asc') sortObj = { price: 1 }
+    else if (sort === 'price_desc') sortObj = { price: -1 }
+    else if (sort === 'name_asc') sortObj = { name: 1 }
+    else if (sort === 'name_desc') sortObj = { name: -1 }
+    
+    const total = await Product.countDocuments(filter)
+    const totalPages = Math.ceil(total / limit)
+    const products = await Product.find(filter)
+      .sort(sortObj)
+      .skip((page - 1) * limit)
+      .limit(Number(limit))
+    res.json({ products, total, totalPages, currentPage: page })
   } catch (err) {
     res.status(500).json({ message: err.message })
   }

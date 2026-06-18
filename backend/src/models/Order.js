@@ -6,12 +6,12 @@ const orderSchema = new mongoose.Schema({
     {
       product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
       name:    String,
-      qty:     Number,
+      quantity:     Number,
       price:   Number
     }
   ],
   total:     { type: Number, required: true },
-  status:    { type: String, enum: ['Processing', 'Shipped', 'Delivered'], default: 'Processing' },
+  status:    { type: String, enum: ['pending', 'processing', 'shipped', 'delivered', 'cancelled'], default: 'pending' },
   shippedTo: { type: String },
   payment:   { type: String }
 }, { timestamps: true })

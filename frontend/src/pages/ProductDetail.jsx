@@ -20,7 +20,7 @@ const ProductDetail = () => {
       <div className={styles.page}>
         <div className={styles.card}>
           <div className={styles.emojiBox}>
-            <p className={styles.emoji}>🛍️</p>
+            <img src={product.image} alt={product.name} className={styles.emoji} />
           </div>
           <div className={styles.info}>
             <p className={styles.category}>{product.category}</p>

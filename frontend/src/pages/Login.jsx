@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import styles from "./Login.module.css";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 const Login = () => {
   const navigate = useNavigate()
@@ -10,11 +10,13 @@ const Login = () => {
   const [password,setPassword] = useState('')
   const [error,setError] = useState('')
   const {login} = useAuth()
+  const location = useLocation()
+  const from = location.state?.from || '/'
   const handleSubmit = async (e) =>{
     e.preventDefault()
     try{
       await login(email,password)
-      navigate('/')
+      navigate(from)
     }catch(error){
       setError(error.message || 'Invalid email or password')
     }

@@ -1,0 +1,50 @@
+.page {
+  background: #F8FAFC;
+  min-height: 100vh;
+  padding: 3rem 2rem;
+}
+
+.card {
+  max-width: 500px;
+  margin: 0 auto;
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  border-radius: 0.8rem;
+  padding: 2rem;
+}
+
+.heading {
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+}
+
+.field {
+  margin-bottom: 1rem;
+}
+
+.fieldLabel {
+  font-size: 0.8rem;
+  color: #64748B;
+  font-weight: 600;
+}
+
+.fieldValue {
+  font-weight: 500;
+  margin-top: 0.3rem;
+}
+
+.logoutBtn {
+  margin-top: 1rem;
+  padding: 0.7rem 1.5rem;
+  background: #EF4444;
+  color: #fff;
+  border: none;
+  border-radius: 0.4rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.logoutBtn:hover {
+  background: #DC2626;
+}

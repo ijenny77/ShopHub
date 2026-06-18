@@ -1,5 +1,6 @@
 const Order = require('../models/Order')
 const Cart  = require('../models/Cart')
+const Product = require('../models/Product')
 
 exports.createOrder = async (req, res) => {
   try {
@@ -11,12 +12,17 @@ exports.createOrder = async (req, res) => {
     const items = cart.items.map(i => ({
       product: i.product._id,
       name:    i.product.name,
-      qty:     i.qty,
-      price:   i.product.price * i.qty
+      quantity:     i.quantity,
+      price:   i.product.price * i.quantity
     }))
     const total = items.reduce((sum, i) => sum + i.price, 0)
-
     const order = await Order.create({ user: req.user.id, items, total, shippedTo, payment })
+    for (let item of items) {
+      await Product.findByIdAndUpdate(
+        item.product,
+        { $inc: { stock: -item.quantity } }
+      )
+    }
 
     cart.items = []
     await cart.save()
@@ -57,6 +63,10 @@ exports.getAllOrders = async (req, res) => {
 
 exports.updateOrderStatus = async (req, res) => {
   try {
+    const allowedStatuses = ['pending', 'processing', 'shipped', 'delivered', 'cancelled'];
+    if (!allowedStatuses.includes(req.body.status)) {
+      return res.status(400).json({ error: 'Invalid status' });
+    }
     const order = await Order.findByIdAndUpdate(
       req.params.id,
       { status: req.body.status },

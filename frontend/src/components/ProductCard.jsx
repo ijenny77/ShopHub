@@ -3,6 +3,7 @@ import Button from './Button'
 import styles from './ProductCard.module.css'
 import { useNavigate } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
+import toast from 'react-hot-toast'
 
 const ProductCard = ({ products = [] }) => {
   const navigate = useNavigate()
@@ -18,19 +19,24 @@ const ProductCard = ({ products = [] }) => {
   return (
     <div className={styles.cards}>
       {products.map((product) => (
-        <div className={styles.card} key={product.id} onClick={()=> navigate(`/product/${product.id}`)} style={{cursor:'pointer'}}>
+        <div className={styles.card} key={product._id} onClick={()=> navigate(`/product/${product._id}`)} style={{cursor:'pointer'}}>
           <div className={styles.emojiCard}>
-            <p className={styles.emoji}>{product.emoji}</p>
+            <img className={styles.emoji} src={product.image}/>
           </div>
           <div className={styles.cardText}>
             <h3 className={styles.category}>{product.category}</h3>
-            <h4 className={styles.title}>{product.title}</h4>
+            <h4 className={styles.title}>{product.name}</h4>
             <h3 className={styles.price}>${product.price.toFixed(2)}</h3>
             <p className={styles.stock}>{product.stock} in stock</p>
             <Button onClick={ async(e) => {
               e.stopPropagation()
-              await addItem(product.id,1)
-              navigate('/cart')
+              try {
+                await addItem(product._id, 1)
+                toast.success('Added to cart')
+                navigate('/cart')
+              } catch {
+                toast.error('Please log in to add items to cart')
+              }
               }} className={styles.addCart}>
               Add to cart
             </Button>

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { createOrder } from "../api";
 import { useCart } from "../context/CartContext";
 import styles from "./Checkout.module.css";
+import toast from "react-hot-toast";
 
 const Checkout = () => {
   const [shippedTo, setShippedTo] = useState('')
@@ -18,6 +19,7 @@ const Checkout = () => {
     await createOrder({ shippedTo, payment })
     clearCart()
     navigate('/orders')
+    toast.success('Order placed')
   }
 
   return (
