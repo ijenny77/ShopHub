@@ -4,7 +4,7 @@ export const CartContext = createContext()
 
 const CartProvider = ({children}) =>{
   const [items,setItems] = useState([])
-  const [loading,setLoading] = useState(false)
+  const [loading,setLoading] = useState(true)
   const fetchCart = async () => {
     setLoading(true)
     const res = await getCart()

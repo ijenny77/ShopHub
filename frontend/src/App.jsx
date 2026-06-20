@@ -9,6 +9,8 @@ import Checkout from "./pages/Checkout.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import ProductDetail from './pages/ProductDetail.jsx'
 import Profile from "./pages/Profile.jsx";
+import AdminRoute from './components/AdminRoute.jsx'
+import AdminProducts from "./pages/AdminProducts.jsx";
 const App = () => {
   return (
     <Routes>
@@ -20,6 +22,7 @@ const App = () => {
       <Route path="/checkout" element={<ProtectedRoute><Checkout/></ProtectedRoute>}></Route>
       <Route path="/product/:id" element={<ProtectedRoute><ProductDetail/></ProtectedRoute>}></Route>
       <Route path="/profile" element={<ProtectedRoute><Profile/></ProtectedRoute>}></Route>
+      <Route path="/admin/products" element={<AdminRoute><AdminProducts/></AdminRoute>}></Route>
     </Routes>
   );
 };

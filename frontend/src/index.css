@@ -16,3 +16,19 @@ body {
   font-family: "Segoe UI", system-ui, sans-serif;
   background-color:#F8FAFC ;
 }
+
+.container{
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+.container-sm{
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.mt-2{ margin-top: 2rem; }
+.mt-4{ margin-top: 4rem; }
+.pb-4{ padding-bottom: 4rem; }
+.text-center{ text-align: center; }

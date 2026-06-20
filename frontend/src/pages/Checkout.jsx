@@ -11,8 +11,11 @@ const Checkout = () => {
   const [shippedTo, setShippedTo] = useState('')
   const [payment,   setPayment]   = useState('Mobile Money')
   const navigate = useNavigate()
-  const { items, clearCart } = useCart()
-  const total = items.reduce((sum, i) => sum + i.product.price * i.qty, 0)
+  const { items, clearCart, loading } = useCart()
+  const validItems = items.filter(i => i.product)
+  const total = validItems.reduce((sum, i) => sum + i.product.price * i.qty, 0)
+
+  if (loading) return <p style={{textAlign:'center', marginTop:'4rem'}}>Loading...</p>
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -31,10 +34,10 @@ const Checkout = () => {
           {/* Order Summary */}
           <div className={styles.summary}>
             <h2 className={styles.heading}>Order Summary</h2>
-            {items.length === 0 ? (
+            {validItems.length === 0 ? (
               <p className={styles.empty}>Your cart is empty.</p>
             ) : (
-              items.map((item) => (
+              validItems.map((item) => (
                 <div key={item.product._id} className={styles.item}>
                   <span>{item.product.name} × {item.qty}</span>
                   <span>${(item.product.price * item.qty).toFixed(2)}</span>

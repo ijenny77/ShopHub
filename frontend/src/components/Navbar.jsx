@@ -14,20 +14,26 @@ const Navbar = () => {
     logout()
     navigate('/login')
   }
+  const initials = user?.name?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
+
   return (
     <div className={styles.mainNavbar}>
       <h1 className={styles.shop}>
         Shop<span className={styles.hub}>Hub</span>
       </h1>
       <div className={styles.navlinks}>
+        {user?.role === "admin" && (
+          <NavLink className={({isActive}) => isActive ? styles.activeLink : styles.link} to="/admin/products">
+            Admin
+          </NavLink>
+        )}
         <NavLink className={({isActive}) => isActive ? styles.activeLink : styles.link} to="/">Home</NavLink>
-        <NavLink className={({isActive}) => isActive ? styles.activeLink : styles.link} to="/cart">Cart</NavLink>
         <NavLink className={({isActive}) => isActive ? styles.activeLink : styles.link} to="/orders">Orders</NavLink>
       </div>
-      <p className={styles.cart}>🛒{total > 0 && <span className={styles.badge}>{total}</span>}</p>
+      <NavLink to="/cart" className={styles.cart}>🛒{total > 0 && <span className={styles.badge}>{total}</span>}</NavLink>
       {user ? (
         <>
-          <Link className={styles.username} to='/profile'>Hello,{user.name}</Link>
+          <Link to='/profile' className={styles.avatar}>{initials}</Link>
           <Button className={styles.login} onClick={handleLogout}>Logout</Button>
         </>
       ):(

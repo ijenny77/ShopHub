@@ -13,6 +13,7 @@ api.interceptors.request.use((config) => {
 export const register = (data) => api.post("/auth/register", data);
 export const login = (data) => api.post("/auth/login", data);
 export const getMe = () => api.get("/auth/me");
+export const updateMe = (data) => api.put('/auth/me', data)
 
 // ── Products ──────────────────────────────────────────────────────────────
 // GET /api/products?search=&category=&minPrice=&maxPrice=&sort=&page=&limit=

@@ -8,9 +8,10 @@ import toast from "react-hot-toast";
 const Cart = () => {
   const { items, removeItem, clearCart,updateItem,loading } = useCart()
   const navigate = useNavigate()
-
-  const total = items.reduce((sum, i) => sum + i.product.price * i.qty, 0)
+  
   if(loading) return <p style={{textAlign:'center',marginTop:'4rem'}}>Loading...</p>
+  const validItems = items.filter(i => i.product)
+  const total = validItems.reduce((sum, i) => sum + i.product.price * i.qty, 0)
   return (
     <div>
       <Navbar />
@@ -19,13 +20,13 @@ const Cart = () => {
           Your Cart
         </p>
 
-        {items.length === 0 ? (
+        {validItems.length === 0 ? (
           <p style={{ textAlign: 'center', color: '#78889A', marginTop: '4rem' }}>
             Your cart is empty.
           </p>
         ) : (
           <div className={styles.cartCards}>
-            {items.map((item) => (
+            {validItems.map((item) => (
               <div className={styles.cartCard} key={item.product._id}>
                 <img src={item.product.image} alt={item.product.name} className={styles.cartImage} />
                 <div className={styles.cartCardText}>
@@ -48,7 +49,7 @@ const Cart = () => {
 
             <div className={styles.total}>
               <span className={styles.totalItems}>
-                Subtotal ({items.length} items) <p>${total.toFixed(2)}</p>
+                Subtotal ({validItems.length} items) <p>${total.toFixed(2)}</p>
               </span>
               <span className={styles.shipping}>
                 Shipping <p style={{ color: '#16A34A' }}>Free</p>

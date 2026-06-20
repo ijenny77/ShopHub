@@ -4,6 +4,10 @@
   gap: 0.1rem;
   padding: 1.6rem 1rem;
   align-items: center;
+  position: sticky;
+  top: 0 ;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 .navlinks {
   display: flex;
@@ -29,6 +33,7 @@
   margin-left: 1rem;
   color: var(--white);
   position: relative;
+  text-decoration: none;
 }
 .badge {
   background-color: #EF4444;
@@ -64,10 +69,19 @@
   font-weight: 600;
   border: none;
 }
-.username{
-  color: var(--white);
-  font-weight: 600;
-  margin-top:0.1rem;
+.avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: #1E293B;
+  color: #38BDF8;
+  font-size: 0.95rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-decoration: none;
   margin-left: 1rem;
+  border: 2px solid #38BDF8;
+  flex-shrink: 0;
 }

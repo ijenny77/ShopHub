@@ -5,6 +5,7 @@ import styles from "./Home.module.css";
 import Select from "../components/Select";
 import ProductCard from "../components/ProductCard";
 import { getProducts } from '../api/index.js'
+import Footer from '../components/Footer';
 
 const CATEGORIES = [
   { value: "all",         label: "All categories" },
@@ -79,6 +80,7 @@ const Home = () => {
         </div>
         <ProductCard products={products} />
       </div>
+      <Footer/>
     </div>
   );
 };

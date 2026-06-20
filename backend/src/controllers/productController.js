@@ -41,7 +41,9 @@ exports.getOne = async (req, res) => {
 
 exports.create = async (req, res) => {
   try {
-    res.status(201).json(await Product.create(req.body))
+    const data = {...req.body}
+    if(req.file) data.image = `/uploads/${req.file.filename}`
+    res.status(201).json(await Product.create(data))
   } catch (err) {
     res.status(400).json({ message: err.message })
   }
@@ -49,7 +51,9 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
-    const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    const data = {...req.body}
+    if(req.file) data.image = `/uploads/${req.file.filename}`
+    const product = await Product.findByIdAndUpdate(req.params.id, data, { new: true })
     if (!product) return res.status(404).json({ message: 'Product not found' })
     res.json(product)
   } catch (err) {
