@@ -4,6 +4,7 @@ import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import styles from "../context/CartContext.module.css";
 import toast from "react-hot-toast";
+import Button from "../components/Button";
 
 const Cart = () => {
   const { items, removeItem, clearCart,updateItem,loading } = useCart()
@@ -11,7 +12,7 @@ const Cart = () => {
   
   if(loading) return <p style={{textAlign:'center',marginTop:'4rem'}}>Loading...</p>
   const validItems = items.filter(i => i.product)
-  const total = validItems.reduce((sum, i) => sum + i.product.price * i.qty, 0)
+  const total = validItems.reduce((sum, i) => sum + i.product.price * i.quantity, 0)
   return (
     <div>
       <Navbar />
@@ -34,9 +35,9 @@ const Cart = () => {
                   <p>${item.product.price.toFixed(2)}</p>
                 </div>
                 <div className={styles.qtyControls}>
-                  <button className={styles.decrease} onClick={()=>item.qty === 1 ? removeItem(item.product._id):updateItem(item.product._id,item.qty - 1)}>-</button>
-                  <span>{item.qty}</span>
-                  <button className={styles.increase} onClick={() => updateItem(item.product._id,item.qty + 1)}>+</button>
+                  <button className={styles.decrease} onClick={()=>item.quantity === 1 ? removeItem(item.product._id):updateItem(item.product._id,item.quantity - 1)}>-</button>
+                  <span>{item.quantity}</span>
+                  <button className={styles.increase} onClick={() => item.quantity < item.product.stock ? updateItem(item.product._id,item.quantity + 1) : toast.error('Not enough stock')}>+</button>
                 </div>
                 <button className={styles.remove} onClick={() => {
                   removeItem(item.product._id)
@@ -47,9 +48,15 @@ const Cart = () => {
               </div>
             ))}
 
+            <Button onClick = {()=>{
+              clearCart(); toast.success("Cart cleared")
+            }}>
+              Clear Cart
+            </Button>
+
             <div className={styles.total}>
               <span className={styles.totalItems}>
-                Subtotal ({validItems.length} items) <p>${total.toFixed(2)}</p>
+                Subtotal ({validItems.reduce((sum, i) => sum + i.quantity, 0)} items) <p>${total.toFixed(2)}</p>
               </span>
               <span className={styles.shipping}>
                 Shipping <p style={{ color: '#16A34A' }}>Free</p>

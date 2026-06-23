@@ -9,7 +9,7 @@ import { BsCart3 } from "react-icons/bs";
 const Navbar = () => {
   const {items} = useCart()
   const { user,logout } = useAuth()
-  const total = items.reduce((sum,i)=>sum + i.qty,0)
+  const total = items.reduce((sum,i)=>sum + i.quantity,0)
   const navigate = useNavigate()
   const handleLogout = () =>{
     logout()
@@ -28,13 +28,20 @@ const Navbar = () => {
             Admin
           </NavLink>
         )}
+        {user?.role === "admin" && (
+          <NavLink className={({isActive}) => isActive ? styles.activeLink : styles.link} to="/admin/stock">
+            Stock
+          </NavLink>
+        )}
         <NavLink className={({isActive}) => isActive ? styles.activeLink : styles.link} to="/">Home</NavLink>
         <NavLink className={({isActive}) => isActive ? styles.activeLink : styles.link} to="/orders">Orders</NavLink>
       </div>
-      <NavLink to="/cart" className={styles.cart}>
-      <BsCart3 size={22}/>
-      {total > 0 && <span className={styles.badge}>{total}</span>}
-      </NavLink>
+      {user?.role !== "admin" && (
+        <NavLink to="/cart" className={styles.cart}>
+          <BsCart3 size={22}/>
+          {total > 0 && <span className={styles.badge}>{total}</span>}
+        </NavLink>
+      )}
       {user ? (
         <>
           <Link to='/profile' className={styles.avatar}>{initials}</Link>

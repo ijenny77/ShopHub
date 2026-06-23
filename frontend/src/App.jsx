@@ -11,10 +11,11 @@ import ProductDetail from './pages/ProductDetail.jsx'
 import Profile from "./pages/Profile.jsx";
 import AdminRoute from './components/AdminRoute.jsx'
 import AdminProducts from "./pages/AdminProducts.jsx";
+import AdminStock from "./pages/AdminStock.jsx";
 const App = () => {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />  
+      <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login/>}></Route>
       <Route path="/register" element={<Register/>}></Route>
       <Route path="/cart" element={<ProtectedRoute><Cart/></ProtectedRoute>}></Route>
@@ -23,6 +24,7 @@ const App = () => {
       <Route path="/product/:id" element={<ProtectedRoute><ProductDetail/></ProtectedRoute>}></Route>
       <Route path="/profile" element={<ProtectedRoute><Profile/></ProtectedRoute>}></Route>
       <Route path="/admin/products" element={<AdminRoute><AdminProducts/></AdminRoute>}></Route>
+      <Route path="/admin/stock" element={<AdminRoute><AdminStock/></AdminRoute>}></Route>
     </Routes>
   );
 };

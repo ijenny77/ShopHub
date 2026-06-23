@@ -79,7 +79,9 @@
   color: white;
   border: none;
   padding:0.8rem 1rem;
+  font-weight: 700;
 }
+
 /* ── Stats ── */
 .stats {
   display: flex;
