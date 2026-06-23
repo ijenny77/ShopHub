@@ -29,6 +29,8 @@
   background-color:#1E293B;
 }
 .cart {
+  display: flex;
+  align-items: center;
   font-size: 1.2rem;
   margin-left: 1rem;
   color: var(--white);
@@ -38,12 +40,17 @@
 .badge {
   background-color: #EF4444;
   color: white;
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   font-weight: 700;
   border-radius: 50%;
-  padding: 0.1rem 0.35rem;
-  margin-left: 0.2rem;
-  vertical-align: top;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: -6px;
+  right: -8px;
 }
 .shop {
   color: var(--white);
@@ -61,7 +68,7 @@
   background-color: var(--navbar);
   color: #5d6d84;
   font-weight: 700;
-  margin-left: 2.5rem;
+  margin:0 1.5rem;
 }
 .register {
   background-color: var(--bbutton);

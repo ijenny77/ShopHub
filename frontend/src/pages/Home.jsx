@@ -6,6 +6,7 @@ import Select from "../components/Select";
 import ProductCard from "../components/ProductCard";
 import { getProducts } from '../api/index.js'
 import Footer from '../components/Footer';
+import Hero from '../components/Hero.jsx'
 
 const CATEGORIES = [
   { value: "all",         label: "All categories" },
@@ -54,6 +55,7 @@ const Home = () => {
   return (
     <div>
       <Navbar />
+      <Hero/>
       <div className={styles.mainHome}>
         <h1 className={styles.discover}>Discover Amazing Products</h1>
         <p className={styles.discoverText}>Find everything you need, delivered to your door.</p>

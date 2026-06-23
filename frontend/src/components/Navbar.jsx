@@ -5,6 +5,7 @@ import Button from "./Button";
 import {useCart} from '../context/CartContext'
 import { useAuth } from "../context/AuthContext";
 import { NavLink } from "react-router-dom";
+import { BsCart3 } from "react-icons/bs"; 
 const Navbar = () => {
   const {items} = useCart()
   const { user,logout } = useAuth()
@@ -30,7 +31,10 @@ const Navbar = () => {
         <NavLink className={({isActive}) => isActive ? styles.activeLink : styles.link} to="/">Home</NavLink>
         <NavLink className={({isActive}) => isActive ? styles.activeLink : styles.link} to="/orders">Orders</NavLink>
       </div>
-      <NavLink to="/cart" className={styles.cart}>🛒{total > 0 && <span className={styles.badge}>{total}</span>}</NavLink>
+      <NavLink to="/cart" className={styles.cart}>
+      <BsCart3 size={22}/>
+      {total > 0 && <span className={styles.badge}>{total}</span>}
+      </NavLink>
       {user ? (
         <>
           <Link to='/profile' className={styles.avatar}>{initials}</Link>
