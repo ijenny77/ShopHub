@@ -1,8 +1,9 @@
 import React from "react";
 
-const Select = ({ className, options, onChange, value }) => {
+const Select = ({ className, options, onChange, value,id }) => {
   return (
     <select
+    id={id}
       style={{
         padding: "0.3rem 1.3rem",
         border: "1px solid #E2E8F0",

@@ -7,6 +7,7 @@ import ProductCard from "../components/ProductCard";
 import { getProducts } from '../api/index.js'
 import Footer from '../components/Footer';
 import Hero from '../components/Hero.jsx'
+import { useLocation } from "react-router-dom";
 
 const CATEGORIES = [
   { value: "all",         label: "All categories" },
@@ -51,12 +52,18 @@ const Home = () => {
 
     return list;
   }, [search, category, sort,allProducts]);
+  const location = useLocation()
+  useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    const q = params.get('search')
+    if (q) setSearch(q)
+  }, [location.search])
 
   return (
     <div>
       <Navbar />
       <Hero/>
-      <div className={styles.mainHome}>
+      <div id="products" className={styles.mainHome}>
         <h1 className={styles.discover}>Discover Amazing Products</h1>
         <p className={styles.discoverText}>Find everything you need, delivered to your door.</p>
         <div className={styles.inputs}>
@@ -67,7 +74,8 @@ const Home = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <Select
+          <Select 
+            id = 'category-select'
             options={CATEGORIES}
             className={styles.categories}
             value={category}

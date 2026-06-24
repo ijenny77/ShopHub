@@ -196,7 +196,8 @@
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  margin-left: 5.5rem;
+  object-fit: contain;
   box-sizing: border-box;
   transition: transform 0.4s ease;
 }
@@ -269,4 +270,74 @@
   background: #4f46e5;
   cursor: pointer;
   transition: all 0.25s ease;
+}
+
+.slideCard {
+  position: absolute;
+  bottom: 60px;
+  left: 16px;
+  background: white;
+  border-radius: 14px;
+  padding: 1rem 1.2rem;
+  width: 210px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.slideLabel {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #4f46e5;
+  letter-spacing: 1px;
+}
+
+.slideName {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.slideDesc {
+  font-size: 0.78rem;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.slidePrices {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.slidePrice {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #4f46e5;
+}
+
+.slideOriginal {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  text-decoration: line-through;
+}
+
+.slideBtn {
+  margin-top: 4px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.slideBtn:hover {
+  background: #1d4ed8;
 }
