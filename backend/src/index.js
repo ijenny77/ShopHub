@@ -6,8 +6,9 @@ const mongoose = require('mongoose')
 const app = express()
 
 app.use('/uploads',express.static('uploads'))
+const allowedOrigins = (process.env.CORS_ORIGIN || 'http://localhost:5173').split(',')
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+  origin: (origin, cb) => cb(null, !origin || allowedOrigins.includes(origin)),
   credentials: true
 }))
 
