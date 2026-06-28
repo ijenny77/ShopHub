@@ -4,6 +4,7 @@ import styles from './ProductCard.module.css'
 import { useNavigate } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 import toast from 'react-hot-toast'
+import { getImageUrl } from '../api/index.js'
 
 const ProductCard = ({ products = [] }) => {
   const navigate = useNavigate()
@@ -21,7 +22,7 @@ const ProductCard = ({ products = [] }) => {
       {products.map((product) => (
         <div className={styles.card} key={product._id} onClick={()=> navigate(`/product/${product._id}`)} style={{cursor:'pointer'}}>
           <div className={styles.emojiCard}>
-            <img className={styles.emoji} src={product.image}/>
+            <img className={styles.emoji} src={getImageUrl(product.image)}/>
           </div>
           <div className={styles.cardText}>
             <h3 className={styles.category}>{product.category}</h3>

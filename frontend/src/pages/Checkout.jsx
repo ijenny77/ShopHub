@@ -13,7 +13,7 @@ const Checkout = () => {
   const navigate = useNavigate()
   const { items, clearCart, loading } = useCart()
   const validItems = items.filter(i => i.product)
-  const total = validItems.reduce((sum, i) => sum + i.product.price * i.qty, 0)
+  const total = validItems.reduce((sum, i) => sum + i.product.price * i.quantity, 0)
 
   if (loading) return <p style={{textAlign:'center', marginTop:'4rem'}}>Loading...</p>
 
@@ -39,8 +39,8 @@ const Checkout = () => {
             ) : (
               validItems.map((item) => (
                 <div key={item.product._id} className={styles.item}>
-                  <span>{item.product.name} × {item.qty}</span>
-                  <span>${(item.product.price * item.qty).toFixed(2)}</span>
+                  <span>{item.product.name} × {item.quantity}</span>
+                  <span>${(item.product.price * item.quantity).toFixed(2)}</span>
                 </div>
               ))
             )}

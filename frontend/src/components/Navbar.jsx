@@ -9,7 +9,7 @@ import { BsCart3 } from "react-icons/bs";
 const Navbar = () => {
   const {items} = useCart()
   const { user,logout } = useAuth()
-  const total = items.reduce((sum,i)=>sum + i.quantity,0)
+  const total = (items || []).reduce((sum,i)=>sum + i.quantity,0)
   const navigate = useNavigate()
   const handleLogout = () =>{
     logout()

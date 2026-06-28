@@ -3,6 +3,9 @@ import axios from "axios";
 const BASE_URL = import.meta.env.VITE_API_URL || "https://shophub-p3x3.onrender.com";
 const api = axios.create({ baseURL: `${BASE_URL}/api` });
 
+export const getImageUrl = (path) =>
+  !path || path.startsWith('http') ? path : `${BASE_URL}${path}`;
+
 // Attach JWT token to every request if it exists
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");

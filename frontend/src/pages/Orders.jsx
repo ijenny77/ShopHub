@@ -4,9 +4,11 @@ import styles from "./Orders.module.css";
 import { getMyOrders } from "../api/index.js";
 
 const statusClass = {
-  Delivered: styles.delivered,
-  Shipped:   styles.shipped,
-  Processing: styles.processing,
+  pending:    styles.pending,
+  processing: styles.processing,
+  shipped:    styles.shipped,
+  delivered:  styles.delivered,
+  cancelled:  styles.cancelled,
 };
 
 const Orders = () => {
@@ -47,7 +49,7 @@ const Orders = () => {
               <div className={styles.items}>
                 {order.items.map((item, i) => (
                   <div key={i} className={styles.item}>
-                    <span>{item.name} × {item.qty}</span>
+                    <span>{item.name} × {item.quantity}</span>
                     <span>${item.price.toFixed(2)}</span>
                   </div>
                 ))}

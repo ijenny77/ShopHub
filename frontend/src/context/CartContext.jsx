@@ -7,9 +7,14 @@ const CartProvider = ({children}) =>{
   const [loading,setLoading] = useState(true)
   const fetchCart = async () => {
     setLoading(true)
-    const res = await getCart()
-    setItems(res.data.items)
-    setLoading(false)
+    try {
+      const res = await getCart()
+      setItems(res.data.items)
+    } catch {
+      setItems([])
+    } finally {
+      setLoading(false)
+    }
   }
   const updateItem = async (productId,quantity) => {
     await updateCartItem(productId,quantity)

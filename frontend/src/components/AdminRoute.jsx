@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 const AdminRoute = ({children}) => {
     const {token,user} = useAuth()
     if(!token) return <Navigate to='/login'/>
-    if(user === null) return null;
+    if(user === null) return <p style={{textAlign:'center', marginTop:'4rem'}}>Loading...</p>;
     if(user?.role !== 'admin') return <Navigate to='/'/>
     return children
 }

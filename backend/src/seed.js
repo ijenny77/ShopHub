@@ -17,7 +17,7 @@ const products = [
     price: 199,
     category: 'Electronics',
     stock: 25,
-    image: '/images/blacksets.png',
+    image: '/images/headsets.png',
   },
   {
     name: 'Puma',
