@@ -31,10 +31,12 @@ const Home = () => {
   const [sort,     setSort]     = useState("new");
   const [allProducts,setAllProducts] = useState([])
   const [fetchError, setFetchError] = useState(null)
+  const [loading, setLoading] = useState(true)
   useEffect(()=>{
     getProducts()
       .then(res => setAllProducts(res.data.products))
       .catch(err => setFetchError(err.message || 'Failed to load products'))
+      .finally(() => setLoading(false))
   },[])
 
   const products = useMemo(() => {
@@ -93,6 +95,8 @@ const Home = () => {
         </div>
         {fetchError
           ? <p style={{textAlign:'center', color:'#e53e3e', marginTop:'2rem'}}>{fetchError}</p>
+          : loading
+          ? <p style={{textAlign:'center', color:'#78889A', marginTop:'2rem'}}>Loading...</p>
           : <ProductCard products={products} />
         }
       </div>
