@@ -18,7 +18,7 @@ const Login = () => {
       await login(email,password)
       navigate(from)
     }catch(error){
-      setError(error.message || 'Invalid email or password')
+      setError(error.response?.data?.message || 'Invalid email or password')
     }
   }
   return (

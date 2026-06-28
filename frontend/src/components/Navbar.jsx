@@ -33,6 +33,11 @@ const Navbar = () => {
             Stock
           </NavLink>
         )}
+        {user?.role === "admin" && (
+          <NavLink className={({isActive}) => isActive ? styles.activeLink : styles.link} to="/admin/users">
+            Users
+          </NavLink>
+        )}
         <NavLink className={({isActive}) => isActive ? styles.activeLink : styles.link} to="/">Home</NavLink>
         <NavLink className={({isActive}) => isActive ? styles.activeLink : styles.link} to="/orders">Orders</NavLink>
       </div>

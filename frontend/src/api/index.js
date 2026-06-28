@@ -48,5 +48,7 @@ export const getOrder = (id) => api.get(`/orders/${id}`);
 export const getAllOrders = () => api.get("/admin/orders");
 export const updateOrderStatus = (id, status) =>
   api.put(`/admin/orders/${id}`, { status });
+export const getUsers = () => api.get("/admin/users");
+export const updateUserRole = (id, role) => api.put(`/admin/users/${id}/role`, { role });
 
 export default api;

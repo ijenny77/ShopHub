@@ -1,6 +1,7 @@
 require('dotenv').config()
 const mongoose = require('mongoose')
 const Product = require('./models/Product')
+const User = require('./models/User')
 
 const products = [
   {
@@ -57,6 +58,17 @@ mongoose.connect(process.env.MONGO_URI)
 .then(async () => {
     await Product.deleteMany()
     await Product.insertMany(products)
+
+    const adminEmail = 'e.shimwa1@alustudent.com'
+    const existing = await User.findOne({ email: adminEmail })
+    if (existing) {
+      await User.findByIdAndUpdate(existing._id, { role: 'admin' })
+      console.log('Admin role granted to existing user')
+    } else {
+      await User.create({ name: 'Admin', email: adminEmail, password: 'admin123', role: 'admin' })
+      console.log('Admin user created — password: admin123')
+    }
+
     console.log("Done!")
     mongoose.disconnect()
 })

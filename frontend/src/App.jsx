@@ -12,6 +12,7 @@ import Profile from "./pages/Profile.jsx";
 import AdminRoute from './components/AdminRoute.jsx'
 import AdminProducts from "./pages/AdminProducts.jsx";
 import AdminStock from "./pages/AdminStock.jsx";
+import AdminUsers from "./pages/AdminUsers.jsx";
 const App = () => {
   return (
     <Routes>
@@ -25,6 +26,7 @@ const App = () => {
       <Route path="/profile" element={<ProtectedRoute><Profile/></ProtectedRoute>}></Route>
       <Route path="/admin/products" element={<AdminRoute><AdminProducts/></AdminRoute>}></Route>
       <Route path="/admin/stock" element={<AdminRoute><AdminStock/></AdminRoute>}></Route>
+      <Route path="/admin/users" element={<AdminRoute><AdminUsers/></AdminRoute>}></Route>
     </Routes>
   );
 };
